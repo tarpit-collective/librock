@@ -20,6 +20,9 @@ all: $(BIN)
 clean:
 	rm -rf build/
 
+typst:
+	typst watch doc/design.typ
+
 bear:
 	./util/bear.sh
 

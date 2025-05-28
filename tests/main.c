@@ -1,8 +1,8 @@
 #include <munit.h>
 #include <stdio.h>
 
-#define LIBROCK_IMPL
-#include <librock.h>
+#define RK_POOL_IMPL
+#include <librock/pool.h>
 
 MunitResult sys_pool_create_free(const MunitParameter params[], void *usr) {
     (void)usr;

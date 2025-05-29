@@ -1,9 +1,8 @@
 # `librock`
-Collection of useful functions and data structures for C projects
+> Collection of utilities, data structures and more for tarpit collective projects.
 
 # Cloning
 ```sh
-git clone https://github.com/tarpit-collective/librock.git
+git clone https://github.com/tarpit-collective/librock.git --recursive
 cd librock/
-git submodule update --init --recursive
 ```

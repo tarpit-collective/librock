@@ -1,8 +1,10 @@
 # `librock`
 > Collection of utilities, data structures and more for tarpit collective projects.
 
-# Cloning
+# Build
 ```sh
-git clone https://github.com/tarpit-collective/librock.git --recursive
-cd librock/
+$ git clone https://github.com/tarpit-collective/librock.git --recursive && cd librock/
+$ premake gmake
+$ cd build/
+$ make
 ```

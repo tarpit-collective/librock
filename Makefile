@@ -2,9 +2,9 @@ CC?=gcc
 DBG?=gdb
 
 CSRC:=$(wildcard tests/*.c)
-CSRC+=munit/munit.c
+CSRC+=deps/munit/munit.c
 
-CFLAGS:=-Og -g -Wall -Werror -Wextra -MMD -Imunit/ -Iinclude/
+CFLAGS:=-Og -g -Wall -Werror -Wextra -MMD -Ideps/munit/ -Iinclude/
 LFLAGS:=
 
 BIN:=build/test
@@ -24,6 +24,6 @@ typst:
 	typst watch doc/design.typ
 
 bear:
-	./util/bear.sh
+	./scripts/bear.sh
 
 -include build/*.c.d

@@ -16,15 +16,16 @@ project(
   ]
 )
 
-librock_hdr = files(
-  'include/librock/def.h',
-  'include/librock/librock.h',
+librock_name = meson.project_name()
+librock_version = meson.project_version()
+librock_description = 'A set of useful C functions'
 
+librock_hdr = files(
+  'include/librock/librock.h',
   'include/librock/err.h',
   'include/librock/iter.h',
   'include/librock/util.h',
   'include/librock/pool.h',
-
   'include/librock/str.h',
   'include/librock/io.h',
   'include/librock/log.h',
@@ -34,12 +35,10 @@ librock_hdr = files(
 
 librock_src = files(
   'src/librock.c',
-
   'src/err.c',
   'src/iter.c',
   'src/util.c',
   'src/pool.c',
-
   'src/str.c',
   'src/io.c',
   'src/log.c',
@@ -70,11 +69,11 @@ endif
 
 # Build library
 librock = library(
-	'librock',
+	'rock',
 	librock_src,
 
-	version: '1',
-	soversion: '1',
+	version: librock_version,
+	soversion: librock_version,
 
 	include_directories: librock_inc,
 	dependencies: librock_deps,
@@ -92,29 +91,54 @@ librock_project = declare_dependency(
 )
 
 # Install system-wide
-install_headers(librock_hdr, subdir: 'librock')
+install_headers(librock_hdr, subdir: librock_name)
 
 pkg_mod = import('pkgconfig')
 pkg_mod.generate(
-  name: 'librock',
-  version: '1.0',
-  filebase: 'librock',
-  description: 'A set of useful C functions',
-  subdirs: 'librock',
+  name: librock_name,
+  description: librock_description,
+  filebase: librock_name,
+  version: librock_version,
+  subdirs: librock_name,
   libraries: librock,
 )
 
 # Unit tests
-# if not meson.is_subproject()
-#   add_languages('c')
-#   subdir('tests')
+if not meson.is_subproject()
+  # add_languages('c')
 
-  # test('all_tests',
-  #   executable(
-  #     'run_tests',
-  #     files(project_test_files),
-  #     dependencies : [project_dep, test_dep],
-  #     install : false
-  #   )
-  # )
-# endif
+	librock_tests = {
+	  'sanity_check': { 'path': 'tests/test_librock.c', 'should_fail': false, 'environment': [], 'arguments': [] },
+	}
+
+	foreach name, fields: librock_tests
+		path = fields['path']
+		should_fail = fields['should_fail']
+		environment = fields['environment']
+		arguments = fields['arguments']
+		
+		exe = executable(
+			name,
+			path,
+
+			include_directories: librock_inc,
+			link_with: librock,
+
+			override_options: meson_opts,
+			c_args: librock_opts,
+		)
+
+		test(
+			name,
+			exe,
+
+			depends: librock,
+
+			should_fail: should_fail,
+			verbose: true,
+
+			args: arguments,
+			env: environment,
+		)
+	endforeach
+endif

@@ -7,16 +7,21 @@
 #ifndef RK_MAIN_H
 #define RK_MAIN_H
 
-#include "def.h"
-#include "err.h"
-#include "util.h"
+#include <stdbool.h>
+#include <stddef.h>
+#include <stdint.h>
 
-#include "pool.h"
-#include "iter.h"
+typedef int64_t rk_id_t;
 
-#include "io.h"
-#include "str.h"
-#include "lex.h"
-#include "log.h"
+#include <librock/err.h>
+#include <librock/util.h>
+
+#include <librock/iter.h>
+#include <librock/pool.h>
+
+#include <librock/io.h>
+#include <librock/lex.h>
+#include <librock/log.h>
+#include <librock/str.h>
 
 #endif

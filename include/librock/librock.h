@@ -1,33 +1,22 @@
 // librock.h -- collection of useful C utilities
+
 //
 // SPDX-License-Identifier: AGPL-3.0-only
 //
 
-#ifndef LIBROCK_H
-#define LIBROCK_H
+#ifndef RK_MAIN_H
+#define RK_MAIN_H
 
-#include <stddef.h>
-#include <stdint.h>
-#include <stdbool.h>
+#include "def.h"
+#include "err.h"
+#include "util.h"
 
-typedef int64_t rk_id_t;
+#include "pool.h"
+#include "iter.h"
 
-// ****** IMPLEMENTATION ******
-#ifdef LIBROCK_IMPL
-
-// static rk_id_t rk_sys_pool_new(rk_pool_vt_t *pl, const void *dptr, size_t len, rk_err_t *err) {
-// }
-
-static const rk_pool_vt_t rk_sys_pool_vt = {
-
-};
-
-rk_sys_pool_t rk_sys_pool(rk_err_t *err) {
-    rk_sys_pool_t pl;
-
-    return pl;
-}
-
-#endif
+#include "io.h"
+#include "str.h"
+#include "lex.h"
+#include "log.h"
 
 #endif

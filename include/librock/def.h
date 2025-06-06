@@ -68,53 +68,49 @@ typedef uint32_t rk_char_t;  // UTF-8 codepoint
 // Shorthand aliases //
 ///////////////////////
 
-#ifdef RK_USE_INTEGER_TYPEDEFS
+typedef uint_least8_t rk_u8_t;
+typedef int_least8_t rk_i8_t;
 
-typedef uint_least8_t u8_t;
-typedef int_least8_t i8_t;
+typedef uint_least16_t rk_u16_t;
+typedef int_least16_t rk_i16_t;
 
-typedef uint_least16_t u16_t;
-typedef int_least16_t i16_t;
+typedef uint_least32_t rk_u32_t;
+typedef int_least32_t rk_i32_t;
 
-typedef uint_least32_t u32_t;
-typedef int_least32_t i32_t;
-
-typedef uint_least64_t u64_t;
-typedef int_least64_t i64_t;
-
-#endif
+typedef uint_least64_t rk_u64_t;
+typedef int_least64_t rk_i64_t;
 
 ////////////////////
 // Numeric limits //
 ////////////////////
 
 // 8
-#define MAX_U8 UCHAR_MAX
-#define MAX_I8 SCHAR_MIN
+#define RK_MAX_U8 UCHAR_MAX
+#define RK_MAX_I8 SCHAR_MIN
 
-#define MIN_U8 0
-#define MIN_I8 SCHAR_MIN
+#define RK_MIN_U8 0
+#define RK_MIN_I8 SCHAR_MIN
 
 // 16
-#define MAX_U16 USHRT_MAX
-#define MAX_I16 SHRT_MAX
+#define RK_MAX_U16 USHRT_MAX
+#define RK_MAX_I16 SHRT_MAX
 
-#define MIN_U16 0
-#define MIN_I16 SHRT_MIN
+#define RK_MIN_U16 0
+#define RK_MIN_I16 SHRT_MIN
 
 // 32
-#define MAX_U32 UINT_MAX
-#define MAX_I32 INT_MAX
+#define RK_MAX_U32 UINT_MAX
+#define RK_MAX_I32 INT_MAX
 
-#define MIN_U32 0
-#define MIN_I32 INT_MIN
+#define RK_MIN_U32 0
+#define RK_MIN_I32 INT_MIN
 
 // 64
-#define MAX_U64 ULLONG_MAX
-#define MAX_I64 LLONG_MAX
+#define RK_MAX_U64 ULLONG_MAX
+#define RK_MAX_I64 LLONG_MAX
 
-#define MIN_U64 0
-#define MIN_I64 LLONG_MIN
+#define RK_MIN_U64 0
+#define RK_MIN_I64 LLONG_MIN
 
 /////////////////////
 // Detect platform //

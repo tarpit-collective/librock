@@ -108,7 +108,8 @@ pkg_mod.generate(
 # Unit tests
 if not meson.is_subproject()
 	librock_tests = {
-	  'sanity_check': { 'path': 'tests/test_librock.c', 'environment': [], 'arguments': [], 'should_fail': false },
+	  'pass': { 'path': 'tests/pass.c', 'environment': [], 'arguments': [], 'should_fail': false },
+	  'fail': { 'path': 'tests/fail.c', 'environment': [], 'arguments': [], 'should_fail': true },
 	}
 
 	foreach name, fields: librock_tests

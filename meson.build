@@ -22,6 +22,7 @@ librock_description = 'A set of useful C functions'
 
 librock_hdr = files(
   'include/librock/librock.h',
+  'include/librock/def.h',
   'include/librock/err.h',
   'include/librock/iter.h',
   'include/librock/util.h',

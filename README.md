@@ -9,3 +9,8 @@ $ meson setup build/
 $ meson compile -C build/
 $ meson test -C build/
 ```
+
+> Note: you can use a different compiler/linker with meson when running setup
+by using the environment variables `CC=foo` and `CC_LD=foo`.
+
+> Note: enable ubsan & asan using `meson configure -Dsanitizers=true build/`

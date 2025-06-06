@@ -8,15 +8,9 @@
 #define RK_POOL_H
 
 #include <string.h>
-#include <librock/def.h>
 
-typedef struct {
-	enum {
-		RK_OK,
-		RK_ERR_EOM,
-		RK_ERR_ID,
-	} code;
-} rk_status_t;
+#include <librock/def.h>
+#include <librock/err.h>
 
 // vtable
 typedef struct rk_pool rk_pool_t;

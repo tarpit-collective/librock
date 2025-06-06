@@ -7,10 +7,6 @@
 #ifndef RK_LIBROCK_H
 #define RK_LIBROCK_H
 
-/////////////////////
-// librock headers //
-/////////////////////
-
 #include <librock/def.h>
 #include <librock/err.h>
 #include <librock/pool.h>

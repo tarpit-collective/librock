@@ -46,6 +46,8 @@
 #define RK_LOCATION_LINE RK_STR(__LINE__)
 #define RK_LOCATION_FUNC __func__
 
+#define RK_LINE __LINE__
+
 // Misc
 #define RK_MAX(a, b) ((a > b) ? a : b)
 #define RK_MIN(a, b) ((a < b) ? a : b)

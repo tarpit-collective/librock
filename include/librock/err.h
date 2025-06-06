@@ -42,6 +42,7 @@ struct rk_status {
 	rk_status_kind_t kind;
 };
 
+// Helpers
 void rk_set_status(rk_status_t* status, rk_status_kind_t kind);
 rk_status_kind_t rk_get_status(rk_status_t* status);
 

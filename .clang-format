@@ -89,3 +89,4 @@ BraceWrapping:
   BeforeElse: true
   BeforeCatch: true
 AllowShortEnumsOnASingleLine: false
+---

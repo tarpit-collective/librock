@@ -60,7 +60,10 @@
 // Aliases //
 /////////////
 
-typedef int64_t rk_id_t;     // For pools
+#define RK_INVALID_ID 0
+#define RK_NULL       ((void*)0)
+
+typedef uint64_t rk_id_t;    // For pools (Negative values allowed)
 typedef uintptr_t rk_fd_t;   // For file descriptors
 typedef uint32_t rk_char_t;  // UTF-8 codepoint
 

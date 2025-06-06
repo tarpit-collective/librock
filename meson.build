@@ -10,9 +10,10 @@ project(
   default_options: [
     'c_std=c17',
     'buildtype=release',
+    'strip=true',
     'warning_level=2',  # 3=pedantic
+
     'b_ndebug=if-release',
-    'strip=true'
   ]
 )
 
@@ -134,7 +135,7 @@ if not meson.is_subproject()
 			depends: librock,
 
 			should_fail: should_fail,
-			verbose: true,
+			verbose: false,
 
 			args: arguments,
 			env: environment,

@@ -7,27 +7,34 @@
 #ifndef RK_POOL_H
 #define RK_POOL_H
 
-#include <string.h>
+#include <stddef.h>
 
 #include <librock/def.h>
 #include <librock/err.h>
 
-// vtable
+////////////////////
+// Pool interface //
+////////////////////
+#define RK_MAGIC_STR_SIZE 8
+extern char RK_MAGIC_STR[RK_MAGIC_STR_SIZE];
+
+// Interface methods
 typedef struct rk_pool rk_pool_t;
 
-typedef rk_id_t (*rk_pool_new_t)(rk_pool_t* pl, const void* dptr, size_t len, rk_status_t* err);
-typedef void (*rk_pool_del_t)(rk_pool_t* pl, rk_id_t id, rk_status_t* err);
-typedef rk_id_t (*rk_pool_clone_t)(rk_pool_t* pl, rk_id_t id, rk_status_t* err);
-typedef void* (*rk_pool_get_ptr_t)(rk_pool_t* pl, rk_id_t id, rk_status_t* err);
-typedef size_t (*rk_pool_get_size_t)(rk_pool_t* pl, rk_id_t id, rk_status_t* err);
+typedef rk_id_t (*rk_pool_new_t)(rk_pool_t* interface, const void* data, size_t size, rk_status_t* status);
+typedef void (*rk_pool_delete_t)(rk_pool_t* interface, rk_id_t id, rk_status_t* status);
 
-extern const char* rk_magic_str;
+typedef rk_id_t (*rk_pool_clone_t)(rk_pool_t* interface, rk_id_t id, rk_status_t* status);
 
+typedef void* (*rk_pool_get_ptr_t)(rk_pool_t* interface, rk_id_t id, rk_status_t* status);
+typedef size_t (*rk_pool_get_size_t)(rk_pool_t* interface, rk_id_t id, rk_status_t* status);
+
+// Interface itself
 struct rk_pool {
-	char magic[8];
+	char magic[RK_MAGIC_STR_SIZE];
 
 	rk_pool_new_t new;
-	rk_pool_del_t del;
+	rk_pool_delete_t delete;
 
 	rk_pool_clone_t clone;
 
@@ -35,53 +42,34 @@ struct rk_pool {
 	rk_pool_get_size_t get_size;
 };
 
-#define RK_ID_MAX 16
+// Sanity checks for interfaces
+bool rk_pool_check_magic(rk_pool_t* interface, rk_status_t* status);
+bool rk_pool_check_pointers(rk_pool_t* interface, rk_status_t* status);
+bool rk_pool_check_sanity(rk_pool_t* interface, rk_status_t* status);
 
-typedef struct {
-	rk_pool_t vt;
+// Interface wrappers (avoids having to dereference members of pool manually and can check for NULL)
+rk_id_t rk_pool_new(rk_pool_t* interface, const void* data, size_t size, rk_status_t* status);
+void rk_pool_delete(rk_pool_t* interface, rk_id_t id, rk_status_t* status);
 
-	struct {
-		void* ptr;
-		size_t size;
-	}* objs[RK_ID_MAX];
-} rk_sys_pool_t;
+void rk_pool_clone(rk_pool_t* interface, rk_id_t id, rk_status_t* status);
 
-#define RK_POOL(pl) (rk_pool_vt_t*)(pl)
+void* rk_pool_get_ptr(rk_pool_t* interface, rk_id_t id, rk_status_t* status);
+size_t rk_pool_get_size(rk_pool_t* interface, rk_id_t id, rk_status_t* status);
 
-// vt wrappers
-rk_id_t rk_pool_new(rk_pool_t* pl, const void* dptr, size_t len, rk_status_t* err);
-void rk_pool_delete(rk_pool_t* pl, rk_id_t id, rk_status_t* err);
-void rk_pool_resize(rk_pool_t* pl, rk_id_t id, size_t new_size, rk_status_t* err);
-void* rk_pool_get_ptr(rk_pool_t* pl, rk_id_t id, rk_status_t* err);
-size_t rk_pool_get_size(rk_pool_t* pl, rk_id_t id, rk_status_t* err);
+/////////////////
+// System pool //
+/////////////////
+
+typedef struct rk_sys_pool rk_sys_pool_t;
+
+struct rk_sys_pool {
+	rk_pool_t interface;
+};
 
 // system pool (malloc/free)
-rk_sys_pool_t rk_sys_pool_create(rk_status_t* err);
-rk_pool_t* rk_sys_pool_to_pool(rk_sys_pool_t* pl, rk_status_t* err);
-void rk_sys_pool_destroy(rk_sys_pool_t* pl, rk_status_t* err);
+rk_sys_pool_t rk_sys_pool_create(rk_status_t* status);
+void rk_sys_pool_destroy(rk_sys_pool_t* interface, rk_status_t* status);
 
-const char* rk_magic_str = "HOMEDEPO";
-
-static bool rk_pool_check_magic(const rk_pool_t* pl, rk_status_t* err) {
-	(void)err;
-	const char* data = (const char*)pl;
-
-	if (strncmp(data, rk_magic_str, strlen(rk_magic_str)) == 0) {
-		return true;
-	}
-
-	return false;
-}
-
-rk_id_t rk_pool_new(rk_pool_t* pl, const void* dptr, size_t len, rk_status_t* err) {
-	if (!rk_pool_check_magic(pl, err)) {
-		return -1;
-	}
-	if (pl->new) {
-		return pl->new (pl, dptr, len, err);
-	}
-
-	return -1;
-}
+rk_pool_t* rk_sys_pool_to_pool(rk_sys_pool_t* interface, rk_status_t* status);
 
 #endif

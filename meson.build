@@ -105,10 +105,8 @@ pkg_mod.generate(
 
 # Unit tests
 if not meson.is_subproject()
-  # add_languages('c')
-
 	librock_tests = {
-	  'sanity_check': { 'path': 'tests/test_librock.c', 'should_fail': false, 'environment': [], 'arguments': [] },
+	  'sanity_check': { 'path': 'tests/test_librock.c', 'environment': [], 'arguments': [], 'should_fail': false },
 	}
 
 	foreach name, fields: librock_tests
@@ -116,7 +114,7 @@ if not meson.is_subproject()
 		should_fail = fields['should_fail']
 		environment = fields['environment']
 		arguments = fields['arguments']
-		
+
 		exe = executable(
 			name,
 			path,
